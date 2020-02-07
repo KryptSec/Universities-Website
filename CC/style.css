@@ -1,0 +1,61 @@
+body{
+  margin: auto;
+  padding-left: 15px;
+  padding-right: 15px;
+  padding-top: 15px;
+  padding-bottom: 15px;
+  margin: 50px;
+}
+h1{
+  font-size: 75px;
+  font-weight: bold;
+  font-style: italic;
+  text-align: center;
+}
+
+p{
+  text-align: center;
+  font-style: italic;
+  font-size: 22px;
+  font-weight: bold;
+}
+
+.col-md-1{
+}
+
+h3{
+  text-align: center;
+  font-style: italic;
+  font-size: 50px;
+}
+
+h4{
+  text-align: center;
+  font-style: italic;
+  font-size: 40px;
+}
+
+div .grid-item{
+  text-align: left;
+  font-size: 40px;
+  font-weight: bold;
+  font-style: italic;
+}
+hr {
+  border: 0;
+  width: 100%;
+  color: #f00;
+  background-color: #000000;
+  height: 2px;
+}
+div.hr {
+  height: 20px;
+  background: #fff url(hr1.gif) no-repeat scroll center;
+}
+div.hr hr {
+  display: none;
+}
+@viewport {
+  width: device-width ;
+  zoom: 1.0 ;
+}

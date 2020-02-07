@@ -1,0 +1,116 @@
+@ HTB
+
+Thank you for considering this challenge as an addition
+to your aresenal. I was inspired from the scene in 
+mr.robot when he decrypted all of the encrypted data
+by cracking his private GPG key. A nice learning experience
+with asymmetric encryption and decryption using gpg.
+===========================================================
+
+BEGIN WRITEUP
+
+
+$ unzip clyde.zip
+	Archive:  clyde.zip
+	inflating: hackMyAss.jpeg          
+	extracting: txt.txt
+
+2 files:
+	txt.txt and hackMyAss.jpeg
+
+$ cat txt.txt
+	ZXh0cmEgbWVhc3VyZXMgZm9yIHRoaXMgb25lLi4ueGd4ZHZzcnNw
+
+$ base64 -d txt.txt
+	extra measures for this one...xgxdvsrsp
+
+ROT9 decryption to:
+	gpgmebaby
+
+$ steghide extract -sf hackMyAss.jpeg
+	Enter passphrase: gpgmebaby
+
+'wrote extracted data to "kss.zip".'
+
+
+$ strings kss.zip
+
+very bottom of file i see name:
+	 kryptsec
+
+$ unzip kss.zip
+	Archive:  kss.zip
+	[kss.zip] helpme password: kryptsec
+		inflating: helpme                  
+ 		extracting: Clyde_Josner.gpg        
+  		inflating: Clyde Josner.asc 
+$ cat helpme
+	
+	I was out at the bar tonight with some friends and saw this guy come in, looked like a fed. He ordered a few drinks and then met with a smoking hot lady who he got really fidigty around. He ended up fidgiting his phone, keys and usb out of his pocket as i was getting more drinks right next to him, so while i helpeed him get his stuff i swiped his usb.
+
+	Its been a few hours since i last saw him, he left shortly after that with his friend..On my way home I felt as if i was being watched.. I may just be being paranoid but either waya here is the stuff i got. goodluck..
+
+
+$ gpg2john 'Clyde Josner.asc' > hash
+	File Clyde Josner.asc
+
+$ john --wordlist=/usr/share/wordlists/rockyou.txt hash
+
+	Using default input encoding: UTF-8
+	Loaded 1 password hash (gpg, OpenPGP / GnuPG Secret Key [32/64])
+	Cost 1 (s2k-count) is 65011712 for all loaded hashes
+	Cost 2 (hash algorithm [1:MD5 2:SHA1 3:RIPEMD160 8:SHA256 9:SHA384 10:SHA512 11:SHA224]) is 2 for all loaded hashes
+	Cost 3 (cipher algorithm [1:IDEA 2:3DES 3:CAST5 4:Blowfish 7:AES128 8:AES192 9:AES256 10:Twofish 11:Camellia128 12:Camellia192 13:Camellia256]) is 7 for all loaded hashes
+	Will run 12 OpenMP threads
+	Press 'q' or Ctrl-C to abort, almost any other key for status
+
+(a few seconds later)
+	cheekymonkey     (Clyde Josner)
+	1g 0:00:00:48 DONE (2019-03-03 13:13) 0.02069g/s 79.45p/s 79.45c/s 79.45C/s adriano..dodgers
+	Use the "--show" option to display all of the cracked passwords reliably
+	Session completed
+
+
+$ gpg --import 'Clyde Josner.asc' 
+	
+	Enter Password : cheekymonkey
+		
+		gpg: key 04D2C95C4EECF60E: "Clyde Josner <shellborne@cia.com>" not changed
+		gpg: key 04D2C95C4EECF60E: secret key imported
+		gpg: Total number processed: 1
+		gpg:              unchanged: 1
+		gpg:       secret keys read: 1
+		gpg:  secret keys unchanged: 1
+
+$ gpg Clyde_Josner.gpg 
+	Enter Password: cheekymonkey
+		gpg: WARNING: no command supplied.  Trying to guess what you mean ...
+		gpg: encrypted with 1024-bit RSA key, ID B5D2F93C452CA563, created 2019-03-03
+      		"Clyde Josner <shellborne@cia.com>"
+		gpg: Signature made Sun 03 Mar 2019 12:36:17 PM MST
+		gpg: using RSA key 2FD086FA199B958DEA3E4E9704D2C95C4EECF60E
+		gpg: Good signature from "Clyde Josner <shellborne@cia.com>" [unknown]
+		gpg: WARNING: This key is not certified with a trusted signature!
+		gpg:There is no indication that the signature belongs to the owner.
+		Primary key fingerprint: 2FD0 86FA 199B 958D EA3E  4E97 04D2 C95C 4EEC F60E
+
+new file is saved as Clyde_Josner
+
+$ cat Clyde_Josner
+
+	Clyde, 
+
+		Here are your credentials for the new office. When do you setup shop? next week? Anyways i've open up your account for remote access like you suggested, Oh and don't keep your credentials on your thumbdrives anymore.
+
+
+	Username:	Clyde
+	Passwd:		A14b9gjd41/7331
+
+	I'll send you an email when your computer is online.
+
+	~Johnson
+
+	HTB{s3cr3tp@sSw0rd#k$$}
+
+Challenge Completed
+
